@@ -34,16 +34,16 @@
             </div>
             <div class="row ">
                     <label class="label">Email</label><!--
-                --><input type="text" class="required" data-validation="empty">
+                --><input type="text" class="required" data-validation="empty,email">
             </div> 
             <div class="row ">
                     <label class="label">Téléphone</label><!--
-                --><input type="text" class="required" data-validation="empty">
+                --><input type="text" class="required" data-validation="empty,phone">
             </div> 
 
             <div class="row ">
                     <label class="label">Code postal</label><!--
-                --><input type="text" class="required" data-validation="empty">
+                --><input type="text" class="required" data-validation="empty,postCode">
             </div> 
 
             <!-- CHECKBOX -->

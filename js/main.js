@@ -14,7 +14,7 @@
 
 		// Create the defaults once
 
-		var pluginName = "checkForm",
+		var pluginName = "validaThor",
 			defaults = {
 				parentInput : 'class',
 				errorClass : 'class',
@@ -147,7 +147,7 @@
 						if(!validation($(input),validationType)){ // si la valid est fausse
 
 							/*ADDCLASS erreur */
-							if(!$(input).closest('.'+self.settings.parentInput).hasClass(self.settings.errorClass)){ //et si l'element n a pas deja d'erreur
+							if(!$(input).closest('.'+self.settings.parentInput).hasClass(self.settings.errorClass)){ //et si l'element n'a pas deja d'erreur
 								/*CALLBACK => onErrorField*/
 								if(self.settings.onErrorfield){
 									self.settings.onErrorfield($(input))
@@ -280,7 +280,7 @@
 
 
 $(document).ready(function(){
-	$("form").checkForm({
+	$("form").validaThor({
 		parentInput : 'row',
 		errorClass : 'error',
 		errorMessageClass : 'error-message',
@@ -303,7 +303,7 @@ $(document).ready(function(){
 	// ADDtest permet de créer une validation custom
 	// arg(nom dela methode, type d'input, nom de la validation, mesage d'erreur, et la function de validation)
 	// ne pas oublier de créer le data-validation sur le html
-	$("form").checkForm('addTest','text','empty', 'le champ ne peut etre vide', function(input){
+	$("form").validaThor('addTest','text','empty', 'le champ ne peut etre vide', function(input){
 			console.log('input',input)
 			if(input.val() == ""){
 				return false
