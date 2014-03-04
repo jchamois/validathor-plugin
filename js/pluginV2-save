@@ -1,0 +1,226 @@
+	
+(function($){
+	$.fn.validathor = function(options){
+	
+		var config = {
+			parentInput : 'class',
+			errorClass : 'class',
+			errorMessageClass : 'class',
+			requiredClass : 'class',
+			onErrorSubmit : null,
+			onSuccessSubmit : null,
+			onErrorfield : null,
+			//onSuccessfield : null	
+       	};
+
+       	var options = $.extend(config, options); 
+       	var regEx = {
+			email : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+			postCode : /^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}$/,
+			phone : /^0[1-6]{1}(([0-9]{2}){4})|((\s[0-9]{2}){4})|((-[0-9]{2}){4})$/
+		};
+
+		var validations = {
+			// Input type text
+			"text" : {
+				"empty" : {
+					process : function(input,validationType){
+						if(input.val() == ""){
+							return false
+						}else{
+							return true
+						}	
+					},
+					errorMessage : "Ce champ ne peut pas etre vide."	
+				},
+				"email" : {
+					process : function(input,validationType){
+						if(!regEx[validationType].test(input.val())){
+							return false
+						}else{
+							return true
+						}	
+					},
+					errorMessage : "Veuillez entrer un email valide."
+				},
+				"postCode" : {
+					process : function(input,validationType){	
+						if(!regEx[validationType].test(input.val())){
+							return false
+						}else{
+							return true
+						}	
+					},
+					errorMessage : "Veuillez entrer un code postal valide."
+
+				},
+				"phone" : {
+					process : function(input,validationType){
+						if(!regEx[validationType].test(input.val())){
+							return false
+						}else{
+							return true
+						}	
+					},
+					errorMessage : "Veuillez entrer un numero de téléphone valide."
+
+				}
+			},
+			// Input type checkbox
+			"checkbox" : {
+				"checked" :{
+					process : function(input,validationType){
+						if(input.is(':checked')){
+							return true
+						}else{
+							return false
+						}	
+					},
+					errorMessage : "Veuillez cocher cette case."
+				}
+
+			},	
+	 		// Input type radio
+	 		"radio" : {
+	 			"checked" :{
+	 				process : function(input,validationType){
+	 					var radioGroup = $(input).closest('.radio-group')
+
+	 					if(radioGroup.find('input[type="radio"]:checked').length){
+	 						return true
+	 					}else{	
+	 						return false
+	 					}	
+	 				},
+	 				errorMessage : "Veuillez cocher au moins une case."
+	 			}
+	 		},	
+			// select
+			"select" : {
+				"selected":{
+					process : function(input,validationType){
+
+						if($(input).find('option:selected').val() !=0){
+							return true
+						}else{	
+							return false
+						}	
+					},
+					errorMessage : "Veuillez choisr une option."	
+				}	
+			}
+		};
+
+		var privateMethod = {
+
+			validator: function(that){
+
+				var input = that,
+					inputType = ($(input).is("input")) ? $(input).attr('type') : 'select',
+					testToRun = $(input).data('validation').split(',')
+
+				// testToRun return un aray avec 1 ou plusiuers test
+				$(testToRun).each(function(index){
+					var validationType = testToRun[index], // quel type de valid ?
+					    validation =  validations[inputType][validationType].process // Select la bonne fonction
+
+					if(!validation($(input),validationType)){ // si la valid est fausse
+
+						/*ADDCLASS erreur */
+						if(!$(input).closest('.'+config.parentInput).hasClass(config.errorClass)){ //et si l'element n a pas deja d'erreur
+							/*CALLBACK => onErrorField*/
+							if(config.onErrorfield){
+								config.onErrorfield($(input))
+							}
+							$(input) // je met la class erreur
+								.closest('.'+config.parentInput)
+								.addClass(config.errorClass)
+								.append('<p class="'+config.errorMessageClass+'">'+validations[inputType][validationType].errorMessage+'</p>')
+						}
+
+					}else{
+
+						$(input) // sinon valid est true, j enleve l erreur
+							.closest('.'+config.parentInput)
+							.removeClass(config.errorClass)
+							.find('.'+config.errorMessageClass)
+							.remove()
+
+						/*if(config.onSuccessfield){
+							config.onSuccessfield($(input))
+						} */
+					}	
+				})
+			},
+
+			handlerSubmit : function(form, event){
+				
+				submited = true // le submit a été fait une fois
+				
+				// lance la valid sur chaque champ
+				$('.'+config.requiredClass,form).each(function(){
+					privateMethod.validator(this)		
+				})
+
+				//Si erreur je lance onErrorSubmit
+
+				if($('.'+config.errorClass, form).length){
+					if(config.onErrorSubmit){
+						config.onErrorSubmit(form, event)
+					}
+
+				}else{ // si pas erreur
+					if(config.onSuccessSubmit){
+						config.onSuccessSubmit(form, event)
+					}
+				}
+			}// dg
+		}
+
+		this.each(function(){
+
+			submited = false // un submit a été fait
+			/* AU SUBMIT */
+			$(this).on('submit', function(event){		
+				privateMethod.handlerSubmit(this, event)
+			})
+		
+			/*AU BLUR */
+			$(this).on('blur', '.'+config.requiredClass, function(){
+				
+				if(submited == true){
+					privateMethod.validator(this)
+				}	
+			})
+		});
+
+		return this
+	};
+
+})(jQuery);
+
+$(document).ready(function(){
+
+	var valid = $('form').validathor({
+		parentInput : 'row',
+		errorClass : 'error',
+		errorMessageClass : 'error-message',
+		requiredClass : 'required',
+		onErrorSubmit : function(form,event){
+			event.preventDefault()
+		},
+		onSuccessSubmit : function(form,event){
+			event.preventDefault()
+			console.log(form)
+			alert("succeess")
+		},
+		onErrorfield : function(input){
+			console.log('erreur sur',input)
+		}
+	
+	})
+
+	console.log(valid)
+	
+	//var validation = new checkForm('.form')
+})

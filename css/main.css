@@ -1,0 +1,287 @@
+.cf:before,.cf:after{content:"";display:table}
+.cf:after{clear:both}
+.cf{*zoom:1}
+/* ALIGNEMENT */
+.vTop{vertical-align:top}
+.vBot{vertical-align:bottom}
+.vMid{vertical-align:middle}
+/* RESET/CANCELLING */
+.resetM{margin:0}
+.resetML{margin-left:0;}
+.resetMR{margin-right:0;}
+.resetP{padding:0}
+.resetBorder{border:0 none}
+.resetBg{background:none}
+/* FLUX */
+.fright{float:right}
+.fleft{float:left}
+.clear{clear:both}
+ .iBlock{display:inline-block}
+ .ie7 .iBlock{display: inline}/*correct IE 7 bug inline-block*/
+ .iLine{display:inline}
+.row{display: block}
+/*POSITION*/
+.rel{position:relative}
+.center{margin: 0 auto}
+/*WIDTH*/
+.full{width:100%}
+.size1of2{width:50%}
+.size1of3{width:33.33333%}
+.size2of3{width:66.66666%}
+.size1of4{width:25%}
+.size3of4{width:75%}
+.size1of5{width:20%}
+.size2of5{width:40%}
+.size3of5{width:60%}
+.size4of5{width:80%}
+
+/* TEXT */
+.uppercase{text-transform:uppercase}
+.txtCenter{text-align:center}
+.txtRight{text-align:right}
+.txtLeft{text-align:left}
+.txtJustify{text-align:justify}
+.underline,u{text-decoration:underline}
+.italic,em{font-style:italic}
+.bold,b,strong{font-weight:bold}
+.small,small{font-size:80%}
+.big{font-size:120%}
+
+/* HIDDEN */
+.hidden { display: none;}
+.invisible { visibility: hidden}
+
+/*IMG*/
+img {vertical-align: middle}
+
+/*SELECTION*/
+::-moz-selection {background: #fbc2ff;text-shadow: none}
+::selection { background: #fbc2ff;text-shadow: none}
+
+/*AUTHOR*/
+
+*,*:before,*:after{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;   
+    box-sizing: border-box
+}
+
+body {
+    font-size: 1em; 
+    line-height: 1;
+    background-color: #736F75;
+    color:#333333;
+    font-family: 'Oranienbaum', serif;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 0.93em;
+  	background:url("../img/bg.jpg") repeat scroll left top #FFFFFF
+}
+
+.h1{
+	margin:50px 0;
+	font-size: 2.5em;
+	text-align: center;
+}
+
+
+form{
+	width:100%;
+	margin: 0 auto 30px;
+	padding:20px;
+	max-width: 700px;
+    min-width: 280px;
+    background-color: #fff;
+	box-shadow:1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+form .row{
+	padding:10px;
+	margin: 20px 0;
+	width: 100%;
+	position:relative;
+	-webkit-transition: all .5s ease;
+	   -moz-transition: all .5s ease;
+	    -ms-transition: all .5s ease;
+	     -o-transition: all .5s ease;
+	        transition: all .5s ease;
+}
+
+
+	form label.label{
+		margin:10px 0;
+		display: block;
+		text-transform: uppercase;
+		display: inline-block;
+		vertical-align: middle;
+		width:30%;
+	}
+
+
+input[type="text"],
+input[type="submit"],
+textarea,select{
+	width:70%;
+	padding:10px;
+	box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.1) inset;
+	border: 1px solid #DDDDDD;
+	color:#666;
+	display: inline-block;
+	vertical-align: middle
+
+}
+
+
+input[type="submit"]{
+	width:100px;
+}
+
+.custom-radio{
+	margin-right:20px;
+}
+/*CHECKBOX*/
+
+.custom-checkbox{
+	position: relative;
+	overflow: hidden
+}
+
+	/* on masque l'élément */
+	.custom-checkbox input[type="checkbox"]{  
+		position: absolute;  
+		left: -100%;  
+	}  
+	   
+	/* on set le label correctement */  
+	.custom-checkbox input[type="checkbox"] + label{  
+	  cursor: pointer;  /* affiche un curseur adapté */  
+	  display: inline-block;
+	  vertical-align: middle;
+	  height:25px;
+	  width:auto;
+	}
+	    /* le :before sert à créer la checkbox */  
+	   .custom-checkbox input[type="checkbox"] + label:before{  
+	        background: #fff;
+		    border: 1px solid #DDDDDD;
+		    box-shadow : 0 1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.1) inset;
+		    content: "";
+		    display: inline-block;
+		    height: 25px;
+		    vertical-align: middle;
+		    width: 25px;
+		    margin-right: 10px
+	   }  
+	       
+	    /* Si checked onchange le content ou autre */  
+	  .custom-checkbox input[type="checkbox"]:checked + label:before{ 
+	      content: '';  
+	      font-size: 20px;  
+	       background: url('../img/check.png') no-repeat 50% 50% #fff;
+	      color: #333;  
+	      text-align: center;
+	     
+	    }  
+
+ /*RADIO*/
+
+.custom-radio{
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle
+}
+
+	/* on masque l'élément */
+	.custom-radio input[type="radio"]{  
+		position: absolute;  
+		left: -100%;  
+	}  
+	   
+	/* on set le label correctement */  
+	.custom-radio input[type="radio"] + label{  
+	  cursor: pointer;  /* affiche un curseur adapté */  
+	  display: inline-block;
+	  vertical-align: middle;
+	  height:25px;
+	    width:auto;
+	}
+	    /* le :before sert à créer la radio */  
+	   .custom-radio input[type="radio"] + label:before{  
+	      	background: none repeat scroll 0 0 #fff;
+		    border: 1px solid #DDDDDD;
+		    box-shadow : 0 1px 1px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 0.1) inset;
+		    border-radius: 15px;
+		    content: "";
+		    display: inline-block;
+		    height: 25px;
+		    vertical-align: middle;
+		    width: 25px;
+		    margin-right: 10px
+	   }  
+	       
+	    /* Si checked onchange le content ou autre */  
+	  .custom-radio input[type="radio"]:checked + label:before{ 
+	      content: ''; 
+	      background: url('../img/dot.png') no-repeat 50% 50% #fff;
+	      font-size: 3em; 
+	      line-height: 20px; 
+	      color: #333;  
+	      text-align: center;
+	     
+	    }  
+	  
+/*SELECT*/
+
+.custom-select{
+	position:relative;
+	width:100%;
+	background: url('../img/arrow-select.png') no-repeat #fff;        
+    background-position: 99% 50%;  
+    overflow: hidden;
+    border:1px solid #DDDDDD;
+}
+
+	.custom-select select {
+		border: 0 none; 
+		width:100%;
+		background-color: transparent;     
+		/*CACHE LE SELECT NATIF POUR CHROME ET FF*/ 
+		-webkit-appearance: none;       
+		-moz-appearance: none;            
+		text-indent: 0.01px;    
+		text-overflow: "";
+	}
+
+		.custom-select select option{
+			color:#666;
+			margin: 5px 
+		}
+
+	/*POUR IE 10+*/
+	.custom-select select::-ms-expand {
+		display: none;
+	}
+
+   .lt-ie10 .custom-select select{
+   	   width:110%;
+   	   height:35px;
+   	}
+
+/* form .error input, 
+ form .error label:before,
+ form .error .custom-select{
+ 	border-color:#ff0000!important;
+ }*/
+.error{
+	background-color: #fbe5e5
+}
+.error-message{
+	color: #FF0000;
+    font-family: arial;
+    font-size: 0.75em;
+    font-style: italic;
+    letter-spacing: 0;
+    margin: 5px 0;
+}
+
