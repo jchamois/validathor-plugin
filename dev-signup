@@ -1,0 +1,219 @@
+/*
+	VALIDATHOR JS - Author: Jérémy Chamois 
+	http://github.com/jchamois/validathor-plugin
+*/
+;(function ( $, window, document, undefined ) {
+		var pluginName = "validaThor",
+			defaults = {
+				parentInput : 'class',
+				errorClass : 'class',
+				errorMessageClass : 'class',
+				requiredClass : 'class',
+				onErrorSubmit : null,
+				onSuccessSubmit : null,
+				onErrorfield : null,
+				errorSummary: false,
+				summaryEl:'.error-tab',
+				summaryElTag : 'span',
+				summaryElTagClass: 'class'
+
+			};
+		
+		// CONSTRUCTEUR
+		function Plugin ( element, options ) {
+				
+				self = this;
+				self.isValid = false,
+				self.element = element;
+				self.settings = $.extend( {}, defaults, options );
+			
+		
+				this.validator = function(field){
+				
+					var input = field,
+						inputType = ($(input).is("input")) ? $(input).attr('type') : $(input)[0].tagName.toLowerCase(),
+						testToRun = $(input).data('validation').split(',')
+					
+					// testToRun return un aray avec 1 ou plusieurs test
+					$(testToRun).each(function(index){ // index nb de test dans data-validation
+
+						var validationType = testToRun[index], // quel type de valid ?
+						    validation = validations[inputType][validationType].process // Select la bonne fonction
+
+						if(!validation($(input),validationType)){ // si la valid est fausse
+							
+							if(!self.settings.errorSummary){ //cas sans erreur en haut
+							
+								/*ADDCLASS erreur */
+								if(!$(input).closest(self.settings.parentInput).hasClass(self.settings.errorClass)){ //et si l'element n'a pas deja d'erreur
+								
+									$(input) // je met la class erreur sur le parent
+										.closest(self.settings.parentInput)
+										.addClass(self.settings.errorClass)
+										.append('<p class="'+self.settings.errorMessageClass+'">'+validations[inputType][validationType].errorMessage(input)+'</p>')
+								}
+
+							}else{ // si on a choisi l affichage en mode recap
+
+								$(input) // et je met la class erreur sur le parent
+									.closest(self.settings.parentInput)
+									.addClass(self.settings.errorClass)
+
+								if($('[data-field="'+validationType+'"]').length == 0){
+									
+									$(self.settings.summaryEl)
+										.append('<'+self.settings.summaryElTag+' class='+self.settings.summaryElTagClass+' data-field="'+validationType+'">'+validations[inputType][validationType].errorMessage(input)+'</'+self.settings.summaryElTag+'>')
+										.show()
+								}	
+
+							}
+
+							// CALLBACK => onErrorField
+
+							if(self.settings.onErrorfield){
+								self.settings.onErrorfield($(input))
+							}
+
+							
+						}else{ // si le champ est valide
+
+							$(input) // sinon valid est true, j enleve l erreur
+								.closest(self.settings.parentInput)
+								.removeClass(self.settings.errorClass)
+								.find('.'+self.settings.errorMessageClass)
+								.remove()
+
+								if(self.settings.errorSummary){
+									$(self.settings.summaryEl).find('[data-field='+validationType+']').remove()
+								}
+
+								
+							/*if(this.settings.onSuccessfield){
+								this.settings.onSuccessfield($(input))
+							} */
+						}	
+					})
+					
+					self.valid = !$('[required]:visible',form).closest(self.settings.parentInput).hasClass(self.settings.errorClass)
+
+				};
+
+
+				this.handlerSubmit = function(form, event, callback){
+				
+					//submited = true // le submit a été fait une fois
+					
+						//Si erreur je lance onErrorSubmit
+
+							if($('[required]:visible',form).closest(self.settings.parentInput).hasClass(self.settings.errorClass)){
+
+								if(self.settings.onErrorSubmit){		
+
+									self.settings.onErrorSubmit(form, event)
+									 // je vide la recap d'erreur pour reconstruire le tab
+								}
+
+								}else{ // si pas erreur
+
+									if(self.settings.onSuccessSubmit){
+										
+										self.settings.onSuccessSubmit(form, event)
+									}
+								}
+						
+					
+				};
+
+
+				function isValid(){
+
+					if($('[required]:visible', self.element).closest(self.settings.parentInput).hasClass(self.settings.errorClass)){
+						self.isValid = false
+					}else{
+						self.isValid = true
+					}
+				};
+
+				function init(){ 
+					//submited = false // un submit a été fait
+
+					/*ON BLUR + CHANGE */
+
+					$(element).on('blur', '[required][type="text"]:visible, textarea[required]', function(event){			
+						//if(submited == true){
+							self.validator(this)
+							isValid()
+
+						//}	
+						}).on('change', 'select[required]:visible,[required][type="checkbox"]:visible, [required][type="radio"]:visible', function(event){
+							self.validator(this)
+							isValid()
+
+
+						}).one('submit',function(event){
+							//event.preventDefault()
+							$('[required]:visible',form).each(function(index){
+								self.validator(this)		
+							})
+
+							isValid()
+
+							self.handlerSubmit(self.element, event)
+						})
+				};
+
+			init();
+		};
+		
+		// METHODE PUBLIC
+
+	
+		Plugin.prototype.addTest =  function(input,validatonType, errorMessage, process) {
+
+			if(arguments.length == 4 && typeof(arguments[3]) == 'function'){
+
+				//console.log('argument ok')
+
+				if(input != 'text' && input != 'select' && input != 'radio' && input != 'checkbox'){
+
+					//console.log("Ce type de champs n'existe pas ;-)");	
+
+					return false
+
+				}else{
+					validations[input][validatonType] = {
+						errorMessage :errorMessage,
+						process : process
+					}
+				}
+			}else{
+				return false
+			}
+        };
+
+		// A really lightweight plugin wrapper around the constructor,
+		// preventing against multiple instantiations
+		$.fn[ pluginName ] = function ( options ) {
+			  if (typeof options === "string") {
+
+		            var args = Array.prototype.slice.call(arguments, 1);
+
+		            this.each(function() {
+		                var plugin = $.data(this, pluginName);
+		           		plugin[options].apply(plugin, args);
+		           });
+		        }
+		        else {
+			        return this.each(function () {
+			            if (!$.data(this,  pluginName)) {
+			                $.data(this,  pluginName,
+			                new Plugin( this, options ));
+			            }
+			        });
+		    	}
+			// chaine functions
+			return this;
+		};
+
+})( jQuery, window, document );
+
