@@ -24,59 +24,37 @@
     </head>
 
 <body>
+    <div class="error-block"></div>
     <div class="size1of2 center">
         <h1 class="h1">VALIDATHOR</h1>
-
-        <form action="#" method="post" class="form ">   
-            <div class="row ">
+        <form id="form1" action="#" method="post" class="form" novalidate='novalidate'>   
+           
+            <div class="row" data-parent='field'>
                     <label class="label">Nom</label><!--
-                --><input type="text" class="required" data-validation='empty'>
+                --><input type="text" required='required'  data-error-message='ne peut etre vide' data-validation='empty'>
             </div>
-            <div class="row ">
-                    <label class="label">Email</label><!--
-                --><input type="text" class="required" data-validation="empty,email">
-            </div> 
-            <div class="row ">
-                    <label class="label">Téléphone</label><!--
-                --><input type="text" class="required" data-validation="empty,phone">
-            </div> 
-
-            <div class="row ">
+        
+            <div class="row" data-parent='field'>
                     <label class="label">Code postal</label><!--
-                --><input type="text" class="required" data-validation="empty,postCode">
+                --><input type="text" required='required' data-error-message='doit etre un code postal' data-validation='postCode'>
             </div> 
 
-            <!-- CHECKBOX -->
-
-            <h3 class="h3">Checkbox</h3>
-
-            <div class="row custom-checkbox">
-                <input type="checkbox" name="checkbox" id="checkbox" class="required" data-validation="checked" />
-                <label for="checkbox">Etes vous un etre humain ?</label>
+            <div class="row">
+                <input type="submit" value="Submit">
             </div>
+        </form>
 
-            <div class="radio-group row">
-                <div class=" custom-radio">
-                    <input type="radio" name="radio-choice" id="male" value="male" class="required" data-validation="checked" />
-                    <label for="male">Homme</label> 
-                </div>
-                <div class=" custom-radio">
-                    <input type="radio" name="radio-choice" id="female"  value="female" class="required"  data-validation="checked" />
-                    <label for="female">Femme</label>
-                </div>
+        <form id="form2" action="#" method="post" class="form" novalidate='novalidate'>   
+            <div class="row" data-parent='field'>
+                    <label class="label">Nom</label><!--
+                --><input type="text" required='required'  data-error-message='ne peut etre vide' data-validation='empty'>
+            </div>
+        
+            <div class="row" data-parent='field'>
+                    <label class="label">Code postal</label><!--
+                --><input type="text" required='required' data-error-message='doit etre un code postal' data-validation='postCode'>
             </div> 
 
-            <div class="row"> 
-                <label for="select" class="label">Select Choice: *</label>
-                <div class="custom-select">
-                    <select class="required" data-validation="selected">
-                        <option value="0">Activité*</option>
-                        <option value="tic">TIC</option>
-                        <option value="2">1</option>
-                        <option value="3">1</option>
-                    </select>
-                </div>
-            </div>
             <div class="row">
                 <input type="submit" value="Submit">
             </div>
@@ -88,5 +66,76 @@
  
     <script src="js/libs.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+
+
+$(document).ready(function(){
+
+$("#form1").validathor({
+        parentInput : '[data-parent="field"]',
+        errorClass : 'error',
+        errorMessageClass : 'error-message',
+        requiredClass : '[required]',
+        errorSummary: false,
+        summaryEl:'.error-block',
+        summaryElTag : 'span',
+        summaryElTagClass: 'fds',
+        onErrorSubmit : function(form,event){
+            /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
+            event.preventDefault()
+
+            console.log('error form1')
+          
+        },
+        onSuccessSubmit : function(form,event){
+            /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
+          event.preventDefault()
+            alert("succeess")
+        },
+        onErrorfield : function(){
+            /*callback généré pour chaque erreur mis sur un input*/
+    
+        }
+    })
+
+var validathor = $("#form1").data('validathor')
+console.log(validathor)
+
+$('h1').on('click', function(){
+    $('#form1').find('[required]').each(function(){
+         validathor.validate(this)
+         console.log( validathor.isValid())
+    })
+})
+
+$("#form2").validathor({
+        parentInput : '[data-parent="field"]',
+        errorClass : 'error',
+        errorMessageClass : 'error-message',
+        requiredClass : '[required]',
+        errorSummary: false,
+        summaryEl:'.error-block',
+        summaryElTag : 'span',
+        summaryElTagClass: 'fds',
+        onErrorSubmit : function(form,event){
+            /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
+            event.preventDefault()
+            console.log('error form2')
+          
+        },
+        onSuccessSubmit : function(form,event){
+            /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
+             event.preventDefault()
+            alert("succeess")
+        },
+        onErrorfield : function(){
+            /*callback généré pour chaque erreur mis sur un input*/
+    
+        }
+    })
+})
+
+</script>
 </body>
 </html>
