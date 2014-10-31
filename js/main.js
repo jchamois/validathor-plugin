@@ -1,3 +1,5 @@
+/*VALIDATHOR JS - Author: Jérémy Chamois 
+http://github.com/jchamois/validathor-plugin */
 
 regEx = {
     email : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -10,10 +12,10 @@ validations = {
     "text" : {
         "empty" : {
             process : function(input,validationType){
-            	return !input.val() == ""
+                return !input.val() == ""
             },
             errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             }
         },
         "email" : {
@@ -25,9 +27,9 @@ validations = {
                 }   
             },
               errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             }
-          	
+            
         },
         "postCode" : {
             process : function(input,validationType){   
@@ -37,8 +39,8 @@ validations = {
                     return true
                 }   
             },
-         	  errorMessage : function(input){
-            	return $(input).data('error-message')
+              errorMessage : function(input){
+                return $(input).data('error-message')
             }
 
         },
@@ -51,9 +53,9 @@ validations = {
                 }   
             },
               errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             }
-          	
+            
 
         }
     },
@@ -68,7 +70,7 @@ validations = {
                 }   
             },
              errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             }
         }
 
@@ -86,7 +88,7 @@ validations = {
                 }   
             },
              errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             }
         }
     },  
@@ -102,30 +104,30 @@ validations = {
                 }   
             },
              errorMessage : function(input){
-            	return $(input).data('error-message')
+                return $(input).data('error-message')
             } 
         }   
     }
 }
 
 ;(function ( $, window, document, undefined ) {
-    var pluginName = 'validathor',
+    var pluginName = 'validaThor',
         defaults = {
-	    	parentInput : 'class',
-			errorClass : 'class',
-			errorMessageClass :'class',
-			requiredClass : 'class',
-			onErrorSubmit : null,
-			onSuccessSubmit : null,
-			onErrorfield : null,
-			errorSummary: false,
-			summaryEl:'.error-tab',
-			summaryElTag : 'span',
-			summaryElTagClass: 'class'
+            parentInput : 'class',
+            errorClass : 'class',
+            errorMessageClass :'class',
+            requiredClass : 'class',
+            onErrorSubmit : null,
+            onSuccessSubmit : null,
+            onErrorfield : null,
+            errorSummary: false,
+            summaryEl:'.error-tab',
+            summaryElTag : 'span',
+            summaryElTagClass: 'class'
         };
 
- 
     function Plugin( element, options ) {
+        
         this.element = element;
         this.options = $.extend( {}, defaults, options) ;
         this._defaults = defaults;
@@ -135,81 +137,79 @@ validations = {
 
     Plugin.prototype.validate = function(input){
 
-    	var self = this,
-			inputType = ($(input).is("input")) ? $(input).attr('type') : $(input)[0].tagName.toLowerCase(),
-			testToRun = $(input).data('validation').split(',')
-	
-		// testToRun return un array avec 1 ou plusieurs test
+        var self = this,
+            inputType = ($(input).is("input")) ? $(input).attr('type') : $(input)[0].tagName.toLowerCase(),
+            testToRun = $(input).data('validation').split(',')
+      
+        // testToRun return un array avec 1 ou plusieurs test
 
-		$(testToRun).each(function(index){ // nobe de test dans data-validation
+        $(testToRun).each(function(index){ // nobe de test dans data-validation
 
-			var validationType = testToRun[index], // quel type de valid ?
-			    validation = validations[inputType][validationType].process // Select la bonne fonction
+            var validationType = testToRun[index], // quel type de valid ?
+                validation = validations[inputType][validationType].process // Select la bonne fonction
 
-			if(!validation($(input),validationType)){ // si la valid est fausse
-				
-				if(!self.options.errorSummary){ //cas sans erreur en haut
-				
-					/*ADDCLASS erreur */
+            if(!validation($(input),validationType)){ // si la valid est fausse
+                
+                if(!self.options.errorSummary){ //cas sans erreur en haut
+                
+                    /*ADDCLASS erreur */
 
-					if(!$(input).closest(self.options.parentInput).hasClass(self.options.errorClass)){ //et si l'element n'a pas deja d'erreur
-					
-						$(input) // je met la class erreur sur le parent
-							.closest(self.options.parentInput)
-							.addClass(self.options.errorClass)
-							.append('<p class="'+self.options.errorMessageClass+'">'+validations[inputType][validationType].errorMessage(input)+'</p>')
-					}
+                    if(!$(input).closest(self.options.parentInput).hasClass(self.options.errorClass)){ //et si l'element n'a pas deja d'erreur
+                    
+                        $(input) // je met la class erreur sur le parent
+                            .closest(self.options.parentInput)
+                            .addClass(self.options.errorClass)
+                            .append('<p class="'+self.options.errorMessageClass+'">'+validations[inputType][validationType].errorMessage(input)+'</p>')
+                    }
 
-				}else{ // si on a choisi l affichage en mode recap
+                }else{ // si on a choisi l affichage en mode recap
 
-					$(input) // et je met la class erreur sur le parent
-						.closest(self.options.parentInput)
-						.addClass(self.options.errorClass)
+                    $(input) // et je met la class erreur sur le parent
+                        .closest(self.options.parentInput)
+                        .addClass(self.options.errorClass)
 
-					if($('[data-field="'+validationType+'"]').length == 0){
-						
-						$(self.options.summaryEl)
-							.append('<'+self.options.summaryElTag+' class='+self.options.summaryElTagClass+' data-field="'+validationType+'">'+validations[inputType][validationType].errorMessage(input)+'</'+self.options.summaryElTag+'>')
-							.show()
-					}	
+                    if($('[data-field="'+validationType+'"]').length == 0){
+                        
+                        $(self.options.summaryEl)
+                            .append('<'+self.options.summaryElTag+' class='+self.options.summaryElTagClass+' data-field="'+validationType+'">'+validations[inputType][validationType].errorMessage(input)+'</'+self.options.summaryElTag+'>')
+                            .show()
+                    }   
+                }
 
-				}
+                // CALLBACK => onErrorField
 
-				// CALLBACK => onErrorField
+                if(self.options.onErrorfield){
+                    self.options.onErrorfield($(input))
+                }
 
-				if(self.options.onErrorfield){
-					self.options.onErrorfield($(input))
-				}
+            }else{ // si le champ est valide
 
-			}else{ // si le champ est valide
+                $(input) // sinon valid est true, je retire l erreur
+                    .closest(self.options.parentInput)
+                    .removeClass(self.options.errorClass)
+                    .find('.'+self.options.errorMessageClass)
+                    .remove()
 
-				$(input) // sinon valid est true, je retire l erreur
-					.closest(self.options.parentInput)
-					.removeClass(self.options.errorClass)
-					.find('.'+self.options.errorMessageClass)
-					.remove()
+                    if(self.options.errorSummary){
+                        $(self.options.summaryEl).find('[data-field='+validationType+']').remove()
+                    }
+            }   
+        })  
 
-					if(self.options.errorSummary){
-						$(self.options.summaryEl).find('[data-field='+validationType+']').remove()
-					}
-			}	
-		})	
-
-		self.isValid()	
+        self.isValid()  
     };
 
     Plugin.prototype.isValid = function() {
-		return !$('[required]:visible', this.element).closest(this.options.parentInput).hasClass(this.options.errorClass)
+        return !$('[required]:visible', this.element).closest(this.options.parentInput).hasClass(this.options.errorClass)
     };
 
     Plugin.prototype.init = function () {
+  
+        var self = this
 
-    	var self = this
-
-    	// AU SUBMIT
+        // AU SUBMIT
        $(self.element).on('submit', function(event){ 
-
-            $(self.options.requiredClass,self.element).each(function(){
+            $('[required]:visible',self.element).each(function(){
                 self.validate(this)
             })
             //Si erreur je lance onErrorSubmit
@@ -220,18 +220,18 @@ validations = {
                 self.options.onSuccessSubmit(self.element, event)
               
             }
+        }).on('blur','[required][type="text"]:visible, textarea[required]', function(event){
+            self.validate(this)
+        }).on('change', 'select[required]:visible,[required][type="checkbox"]:visible, [required][type="radio"]:visible', function(event){
+            self.validate(this)             
         })
-        // AU BLUR 
-        $(self.element).on('blur',self.options.requiredClass, function(){
-           self.validate(this)
-        })
-            	
+
     };
 
     $.fn[pluginName] = function ( options ) {
 
         return this.each(function () {
-        	
+            
             if (!$.data(this, pluginName)) {
                 $.data(this, pluginName, 
                 new Plugin( this, options ));
@@ -239,3 +239,4 @@ validations = {
         });
     }
 })( jQuery, window, document );
+

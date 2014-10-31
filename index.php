@@ -72,7 +72,7 @@
 
 $(document).ready(function(){
 
-$("#form1").validathor({
+$("#form1").validaThor({
         parentInput : '[data-parent="field"]',
         errorClass : 'error',
         errorMessageClass : 'error-message',
@@ -99,8 +99,7 @@ $("#form1").validathor({
         }
     })
 
-var validathor = $("#form1").data('validathor')
-console.log(validathor)
+var validathor = $("#form1").data('validathor') 
 
 $('h1').on('click', function(){
     $('#form1').find('[required]').each(function(){
@@ -109,7 +108,7 @@ $('h1').on('click', function(){
     })
 })
 
-$("#form2").validathor({
+$("#form2").validaThor({
         parentInput : '[data-parent="field"]',
         errorClass : 'error',
         errorMessageClass : 'error-message',
