@@ -10,98 +10,141 @@
         <title>VALIDATHOR</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
            
         <!--[if lt IE 9]>
             <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
-       <link href='http://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
-    
+        <link href='http://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700' rel='stylesheet' type='text/css'>
 
         <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="css/main.css">
 
-     
+        <script src="js/modernizr/modernizr-2.6.2.min.js"></script>
     </head>
-
-<body>
-
-    <div class="error-block"></div>
-
-    <section id="page">
-        <header>
-            <h1 class="fs-xl ta-center pt-2 pb-2">VALIDATHOR</h1>
+    <body class="va-center-mid ta-center"><!-- 
+    --><section id="page"class="pb-2 pt-2 ta-left w-d100 d-iblock va-mid">
+        <header class="row mb-2">
+            <div class="region w-d100">
+                <h1 class="fs-xxl ta-center">VALIDATHOR</h1>
+            </div>
         </header>
-        <div class="form-container">
-            <form id="form1" action="#" method="post" class="form" novalidate='novalidate'>   
-                <div class="row" data-parent='field'>
-                        <label class="label">Nom</label><!--
-                    --><input type="text" required='required'  data-error-message='ne peut etre vide' data-validation='empty'>
-                </div>
-            
-                <div class="row" data-parent='field'>
-                        <label class="label">Code postal</label><!--
-                    --><input type="text" required='required' data-error-message='doit etre un code postal' data-validation='postCode'>
-                </div> 
 
-                <div class="row">
-                    <button> Envoie </button>
-                 
-                </div>
-            </form>
-        </div>
-        <div class="form-container">
-            <form id="form2" action="#" method="post" class="form" novalidate='novalidate'>   
-                <div class="row" data-parent='field'>
+        <main id="main" class="region w-d100">
+            <div class="form-container">
+                <form id="form" action="#" method="post" class="form" novalidate='novalidate'>   
+                    <div class="row mt-1 p-1" data-parent='field'>
                         <label class="label">Nom</label><!--
-                    --><input type="text" required='required'  data-error-message='ne peut etre vide' data-validation='empty'>
-                </div>
-            
-                <div class="row" data-parent='field'>
-                        <label class="label">Code postal</label><!--
-                    --><input type="text" required='required' data-error-message='doit etre un code postal' data-validation='postCode'>
-                </div> 
-                <div class="row" data-parent='field'>
-                        <label class="label">Code postal</label><!--
-                    --><select type="text" required='required' data-error-message='le select doit etre rempli' data-validation='selected'>
-                            <option value="0">Choisissez une valeur</option>
-                            <option  value="2">2</option>
-                            <option  value="3">3</option>
-                            <option  value="4">4</option>
-                            <option  value="5">5</option>
-                        </select>
-                </div> 
-                <div class="row radio-group" data-parent='field'>
-                    <div class="custom-radio">
-                        <input id="choice-1" required="required"  data-error-message="vous devez choisir une option"  data-validation='checked' name="choice" type="radio">
-                        <label for="choice-1" >choix 1</label>
-                      </div>
-                      <div class="custom-radio">
-                        <input id="choice-2"  required="required"  data-error-message="vous devez choisir une option"  data-validation='checked' name="choice" type="radio">
-                        <label for="choice-2" >choix 2</label>
-                      </div>
-                </div> 
+                        --><input class="w-d33" id="test" type="text" required='required' data-validation='{"name":"pattern",
+                                                                                                            "regex":"email",
+                                                                                                            "errorMsg":"Email invalide"
+                                                                                                            };
+                                                                                                            {"name":"emptyInput",
+                                                                                                            "errorMsg":"Ne doit pas etre vide "
+                                                                                                            }'>
+                    </div>
+                
+                    <div class="row mt-1 p-1" data-parent='field'>
+                            <label class="label">Telephone</label><!--
+                        --><input class="w-d33" type="text" required='required'  data-validation='{"name":"pattern",
+                                                                                "regex":"phone",
+                                                                                "errorMsg":"Telephone invalide"
+                                                                                };
+                                                                                {"name":"emptyInput",
+                                                                                "errorMsg":"Ne doit pas etre vide "
+                                                                                }'>
+                    </div> 
 
-                    <div class="custom-checkbox row" data-parent="field">
-                        <input id="check-1" required="required"  data-error-message="vous devez choisir une option"  data-validation='checked' name="check" type="checkbox">
-                        <label for="check-1">choix 1</label>
+                    <div class="row mt-1 p-1">
+                        <button type="submit"  class="button submit">J'envoie</button>
+                    </div>
+                </form>
+
+                <form id="form-m" action="#" method="post" class="form" novalidate='novalidate'>   
+                      <div class="row mt-1 p-1" data-parent='field'>
+                            <label class="label">Nom</label><!--
+                        --><input class="w-d33" id="test" type="text" required='required' data-validation='{"name":"pattern",
+                                                                                                            "regex":"email",
+                                                                                                            "errorMsg":"Email invalide"
+                                                                                                            };
+                                                                                                            {"name":"emptyInput",
+                                                                                                            "errorMsg":"Ne doit pas etre vide "
+                                                                                                            }'>
+                    </div>
+                
+                    <div class="row mt-1 p-1" data-parent='field'>
+                            <label class="label">Telephone</label><!--
+                        --><input class="w-d33" type="text" required='required'  data-validation='{"name":"pattern",
+                                                                                "regex":"phone",
+                                                                                "errorMsg":"Telephone invalide"
+                                                                                }'>
                     </div>
 
-                <div class="row">
-                     <button> Envoie </button>
-                </div>
-            </form>
-        </div>
-
-        <a href="#" class="ext-validate">Validez le premier formulaire !</a>
-
+                    <div class="row mt-1 p-1">
+                        <button type="submit"  class="button submit">J'envoie</button>
+                    </div>
+                </form>
+            </div>
+        </main>
     </section>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- 
     <script src="js/validathor.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        $(document).ready(function(){
+      
 
+            $("#form").validaThor({
+                    parentInput : '[data-parent="field"]',
+                    errorClass : 'error',
+                    errorMessageClass : 'error-message',
+                    requiredClass : '[required]',
+                    errorSummary: false,
+                    summaryEl:'.error-block',
+                    summaryElTag : 'span',
+                    summaryElTagClass: 'fds',
+                    onErrorSubmit : function(form,event){
+                        /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
+                        event.preventDefault()
+                    },
+                    onSuccessSubmit : function(form,event){
+                        /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
+                        
+                        alert("succeess")
+                    },
+                    onErrorfield : function(){
+                        /*callback généré pour chaque erreur mis sur un input*/
+                
+                    }
+                })
 
+            $("#form-m").validaThor({
+                    parentInput : '[data-parent="field"]',
+                    errorClass : 'error',
+                    errorMessageClass : 'error-message',
+                    requiredClass : '[required]',
+                    errorSummary: false,
+                    summaryEl:'.error-block',
+                    summaryElTag : 'span',
+                    summaryElTagClass: 'fds',
+                    onErrorSubmit : function(form,event){
+                        /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
+                        event.preventDefault()
+                    },
+                    onSuccessSubmit : function(form,event){
+                        /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
+                
+                        alert("succeess")
+                    },
+                    onErrorfield : function(){
+                        /*callback généré pour chaque erreur mis sur un input*/
+                
+                    }
+                })
+        })
+
+        </script>
 </body>
 </html>
