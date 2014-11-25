@@ -33,11 +33,12 @@
         </header>
 
         <main id="main" class="region w-d100">
+            <ul class="error-block"></ul>
             <div class="form-container">
                 <form id="form" action="#" method="post" class="form" novalidate='novalidate'>   
                     <div class="row mt-1 p-1" data-parent='field'>
                         <label class="label">Nom</label><!--
-                        --><input class="w-d33" id="test" type="text" required='required' data-validation='{"name":"pattern",
+                        --><input class="w-d33" id="name" type="text" required='required' data-validation='{"name":"pattern",
                                                                                                             "regex":"email",
                                                                                                             "errorMsg":"Email invalide"
                                                                                                             };
@@ -45,10 +46,9 @@
                                                                                                             "errorMsg":"Ne doit pas etre vide "
                                                                                                             }'>
                     </div>
-                
                     <div class="row mt-1 p-1" data-parent='field'>
                             <label class="label">Telephone</label><!--
-                        --><input class="w-d33" type="text" required='required'  data-validation='{"name":"pattern",
+                        --><input class="w-d33" type="text" id="tel" required='required'  data-validation='{"name":"pattern",
                                                                                 "regex":"phone",
                                                                                 "errorMsg":"Telephone invalide"
                                                                                 };
@@ -56,7 +56,6 @@
                                                                                 "errorMsg":"Ne doit pas etre vide "
                                                                                 }'>
                     </div> 
-
                     <div class="row mt-1 p-1">
                         <button type="submit"  class="button submit">J'envoie</button>
                     </div>
@@ -64,24 +63,25 @@
 
                 <form id="form-m" action="#" method="post" class="form" novalidate='novalidate'>   
                       <div class="row mt-1 p-1" data-parent='field'>
-                            <label class="label">Nom</label><!--
+                            <label class="label">Email</label><!--
                         --><input class="w-d33" id="test" type="text" required='required' data-validation='{"name":"pattern",
                                                                                                             "regex":"email",
                                                                                                             "errorMsg":"Email invalide"
+                                                                                                           
                                                                                                             };
                                                                                                             {"name":"emptyInput",
                                                                                                             "errorMsg":"Ne doit pas etre vide "
+                                                                                                         
                                                                                                             }'>
                     </div>
-                
                     <div class="row mt-1 p-1" data-parent='field'>
                             <label class="label">Telephone</label><!--
                         --><input class="w-d33" type="text" required='required'  data-validation='{"name":"pattern",
                                                                                 "regex":"phone",
-                                                                                "errorMsg":"Telephone invalide"
+                                                                                "errorMsg":"Telephone invalide",
+                                                                                "uid":"7"
                                                                                 }'>
                     </div>
-
                     <div class="row mt-1 p-1">
                         <button type="submit"  class="button submit">J'envoie</button>
                     </div>
@@ -94,41 +94,29 @@
     <script src="js/validathor.js"></script>
     <script>
         $(document).ready(function(){
-      
-
+    
             $("#form").validaThor({
-                    parentInput : '[data-parent="field"]',
-                    errorClass : 'error',
-                    errorMessageClass : 'error-message',
-                    requiredClass : '[required]',
-                    errorSummary: false,
-                    summaryEl:'.error-block',
-                    summaryElTag : 'span',
-                    summaryElTagClass: 'fds',
+        
+                    errorSummary: true,
+
                     onErrorSubmit : function(form,event){
+                        
                         /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
                         event.preventDefault()
                     },
                     onSuccessSubmit : function(form,event){
-                        /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
                         
-                        alert("succeess")
+                        /*AU SUBMIT, si la validation est bonne, on entre dans ce callback*/
+                        alert("Success")
                     },
                     onErrorfield : function(){
+                        console.log('erreur trigger')
                         /*callback généré pour chaque erreur mis sur un input*/
-                
                     }
                 })
 
             $("#form-m").validaThor({
-                    parentInput : '[data-parent="field"]',
-                    errorClass : 'error',
-                    errorMessageClass : 'error-message',
-                    requiredClass : '[required]',
-                    errorSummary: false,
-                    summaryEl:'.error-block',
-                    summaryElTag : 'span',
-                    summaryElTagClass: 'fds',
+                   
                     onErrorSubmit : function(form,event){
                         /*AU SUBMIT, si il y a une erreur, on entre dans ce callback*/
                         event.preventDefault()
